@@ -10,6 +10,16 @@ export const config = {
     storageId: '667b6856002efcf00dbf',
 }
 
+const {
+    endpoint,
+    platform,
+    projectId,
+    databaseId,
+    userCollectionId,
+    videoCollectionId,
+    storageId,
+} = config;
+
 const client = new Client();
 
 client
@@ -81,5 +91,67 @@ client
             return currentUser.documents[0]
         } catch (error) {
             console.log(error)
+    }
+}
+
+export const getAllPosts = async () => {
+    try {
+        const posts = await databases.listDocuments(
+            databaseId,
+            videoCollectionId
+        ) 
+        return posts.documents;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+export const getLatestPosts = async () => {
+    try {
+        const posts = await databases.listDocuments(
+            databaseId,
+            videoCollectionId,
+            [Query.orderDesc('$createdAt'), Query.limit(7)]
+        ) ;
+
+        return posts.documents;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+export const searchPosts = async (query) => {
+    try {
+        const posts = await databases.listDocuments(
+            databaseId,
+            videoCollectionId,
+            [Query.search('title', query)]
+        ) ;
+
+        return posts.documents;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+export const getUserPosts = async (userId) => {
+    try {
+        const posts = await databases.listDocuments(
+            databaseId,
+            videoCollectionId,
+            [Query.equal('creator', userId)]
+        ) ;
+
+        return posts.documents;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+export const signOut = async () => {
+    try {
+        const session = await account.deleteSession('current');
+        return session;
+    } catch (error) {
+        throw new Error(error)
     }
 }

@@ -8,31 +8,36 @@ import { images } from '../../constants'
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
 
-import { signIn } from '../../library/appwrite'
+import { getCurrentUser, signIn } from '../../library/appwrite'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const SignIn = () => {
-const [form, setForm] = useState({
-  email: '',
-  password: ''
-})
-const [isSubmitting, setIsSubmitting] = useState(false)
 
-const submit = async () => {
-  if(!form.email || !form.password) {
-    Alert.alert('Error', 'Please fill in all fields')
-  }
-  setIsSubmitting(true);
-  try {
-    await signIn(form.email, form.password);
+  const { setUser, setIsLoggedIn } = useGlobalContext();
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-    // set it to global state...
+  const submit = async () => {
+    if(!form.email || !form.password) {
+      Alert.alert('Error', 'Please fill in all fields')
+    }
+    setIsSubmitting(true);
+    try {
+      await signIn(form.email, form.password);
 
-    router.replace('/home')
-  } catch (error) {
-    Alert.alert('Error', error.message)
-  } finally {
-    setIsSubmitting(false);
-  }
+      const result = await getCurrentUser();
+
+      setUser(result);
+      setIsLoggedIn(true);
+      router.replace('/home')
+    } catch (error) {
+      Alert.alert('Error', error.message)
+    } finally {
+      setIsSubmitting(false);
+    }
 }
 
   return (
