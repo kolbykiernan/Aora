@@ -7,7 +7,7 @@ import SearchInput from '../../components/SearchInput'
 import { searchPosts } from '../../library/appwrite'
 import EmptyState from '../../components/EmptyState'
 import VideoCard from '../../components/VideoCard'
-import useAppwrite from '../../library/useAppwite'
+import useAppwrite from '../../library/useAppwrite'
 import { useLocalSearchParams } from 'expo-router'
 
 

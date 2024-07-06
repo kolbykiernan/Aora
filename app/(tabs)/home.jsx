@@ -9,7 +9,7 @@ import Trending from '../../components/Trending'
 import { getAllPosts, getLatestPosts } from '../../library/appwrite'
 import EmptyState from '../../components/EmptyState'
 import VideoCard from '../../components/VideoCard'
-import useAppwrite from '../../library/useAppwite'
+import useAppwrite from '../../library/useAppwrite'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 
@@ -53,7 +53,9 @@ const Home = () => {
                 />
               </View>
             </View>
-            <SearchInput/>
+            <SearchInput
+              placeholder="Search for a video topic"
+            />
             <View className="w-full flex-1 pt-5 pb-8">
               <Text className="text-gray-100 text-lg font-pregular mb-3">
                 Trending Videos

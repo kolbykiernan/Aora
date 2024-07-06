@@ -1,4 +1,4 @@
-import { Account, Avatars, Databases, Client, ID, Query } from 'react-native-appwrite';
+import { Account, Avatars, Databases, Client, ID, Query, Storage } from 'react-native-appwrite';
 
 export const config = {
     endpoint: 'https://cloud.appwrite.io/v1',
@@ -30,6 +30,7 @@ client
     const account = new Account(client);
     const avatars = new Avatars(client);
     const databases = new Databases (client)
+    const storage = new Storage (client)
 
     export const createUser = async (email, password, username) => {
         try {
@@ -98,7 +99,8 @@ export const getAllPosts = async () => {
     try {
         const posts = await databases.listDocuments(
             databaseId,
-            videoCollectionId
+            videoCollectionId,
+            [Query.orderDesc('$createdAt')]
         ) 
         return posts.documents;
     } catch (error) {
@@ -118,6 +120,57 @@ export const getLatestPosts = async () => {
         throw new Error(error)
     }
 }
+export const updatePostLikes = async (postId, accountId, liked) => {
+    try {
+        const post = await databases.getDocument(
+            databaseId,
+            videoCollectionId,
+            postId
+        );
+
+        let likes = post.likes || [];
+
+        if (liked) {
+            if (!likes.includes(accountId)) {
+                likes.push(accountId);
+            }
+        } else {
+            likes = likes.filter(id => id !== accountId);
+        }
+
+        const updatedPost = await databases.updateDocument(
+            databaseId,
+            videoCollectionId,
+            postId,
+            { likes }
+        );
+
+        console.log('Successfully updated likes for post', postId, 'New likes:', updatedPost.likes);
+    } catch (error) {
+        console.error('Error updating likes:', error); // Debugging statement
+        throw new Error(error);
+    }
+};
+
+
+
+export const getSavedPosts = async (accountId) => {
+    try {
+        const posts = await databases.listDocuments(
+            databaseId,
+            videoCollectionId,
+            [Query.orderDesc('$createdAt')]
+        );
+
+        const likedPosts = posts.documents.filter(post => post.likes && post.likes.includes(accountId));
+
+        return likedPosts;
+
+    } catch (error) {
+        console.error('Error fetching posts:', error); // Debugging statement
+        throw new Error(error);
+    }
+};
 
 export const searchPosts = async (query) => {
     try {
@@ -126,6 +179,8 @@ export const searchPosts = async (query) => {
             videoCollectionId,
             [Query.search('title', query)]
         ) ;
+
+        if (!posts) throw new Error("Something went wrong");
 
         return posts.documents;
     } catch (error) {
@@ -151,6 +206,75 @@ export const signOut = async () => {
     try {
         const session = await account.deleteSession('current');
         return session;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+export const getFilePreview = async (fileId, type) => {
+    let fileUrl;
+    try {
+        if (type === 'video') {
+            fileUrl = storage.getFileView(storageId, fileId)
+        } else if (type === 'image') {
+            fileUrl = storage.getFilePreview(storageId, fileId, 2000, 2000, 'top', 100)
+        } else {
+            throw new Error('Invalid file type')
+        }
+        
+        if(!fileUrl) throw Error;
+
+        return fileUrl;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+export const uploadFile = async (file, type) => {
+    if(!file) return;
+
+    const { mimeType, ...rest } = file;
+    const asset = { 
+        name: file.fileName,
+        type: file.mimeType,
+        size: file.fileSize,
+        uri: file.uri,
+     };
+
+    console.log('FILE', file)
+    
+    try {
+        const uploadedFile = await storage.createFile(
+            storageId,
+            ID.unique(),
+            asset
+        )
+        console.log('UPLOADED', uploadedFile)
+
+        const fileUrl = await getFilePreview(uploadedFile.$id, type);
+        return fileUrl;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+export const createVideo = async (form) => {
+    try {
+        const [thumbnailUrl, videoUrl] = await Promise.all([
+            uploadFile(form.thumbnail, 'image'),
+            uploadFile(form.video, 'video'),
+        ])
+
+        const newPost = await databases.createDocument(
+            databaseId, videoCollectionId, ID.unique(), {
+                title: form.title,
+                thumbnail: thumbnailUrl,
+                video: videoUrl,
+                prompt: form.prompt,
+                creator: form.userId
+            }
+        )
+
+        return newPost;
     } catch (error) {
         throw new Error(error)
     }

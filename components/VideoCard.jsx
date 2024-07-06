@@ -1,11 +1,16 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { icons } from '../constants'
+import Heart from './Heart'
 import { useState } from 'react'
 import { Video, ResizeMode } from 'expo-av';
+import { useGlobalContext } from '../context/GlobalProvider'
 
-const VideoCard = ({ video: {title, thumbnail, video, creator: { username, avatar }} }) => {
-    const [play, setPlay] = useState(false)
+const VideoCard = ({ video: {  $id, title, thumbnail, video, likes, creator: { username, avatar }} }) => {
+    const { user } = useGlobalContext();
+    const [play, setPlay] = useState(false);
+
+    const initialLiked = likes ? likes.includes(user.accountId) : false;
 
   return (
     <View className="flex-col items-center px-4 mb-14">
@@ -31,10 +36,10 @@ const VideoCard = ({ video: {title, thumbnail, video, creator: { username, avata
                 </View>
             </View>
             <View className="pt-2">
-                <Image 
-                    source={icons.menu}
-                    className="w-5 h-5"
-                    resizeMode='contain'
+                <Heart 
+                    initialLiked={initialLiked}
+                    postId={$id}
+                    accountId={user.accountId}
                 />
             </View>
         </View>
