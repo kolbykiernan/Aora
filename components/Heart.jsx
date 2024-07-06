@@ -23,7 +23,7 @@ const Bookmark = ({ initialLiked = false, postId, accountId }) => {
           style={{ 
             width: 20, 
             height: 20, 
-            marginTop: 2.5,
+            
             marginRight: 2.5,
             tintColor: liked ? '#FF9C01' : undefined 
           }}
