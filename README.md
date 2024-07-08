@@ -4,16 +4,16 @@
 <summary>Table of Contents</summary>
 
 1. 👋 [About The Project](#about-the-project)
-    * ⚙ [Tech Stack](#tech-stack)
-    * 📲 [Features](#features)
-2. 🏁 [Getting Started](#getting-started)
+2. ⚙ [Tech Stack](#tech-stack)
+3. 📲 [Features](#features)
+4. 🏁 [Getting Started](#getting-started)
     * 🧑‍💻 [Prerequisites](#prerequisites)
     * 🔌 [Installation Instructions](#installation-instructions)
-4. 🗺️  [Roadmap](#roadmap)
-5. 🤝 [Contributing](#contributing)
-6. 🪪 [License](#license)
-7. 📞 [Contact](#contact)
-8. 🌟 [Credits](#credits)
+5. 🗺️  [Roadmap](#roadmap)
+6. 🤝 [Contributing](#contributing)
+7. 🪪 [License](#license)
+8. 📞 [Contact](#contact)
+9. 🌟 [Credits](#credits)
 
 
 </details>
@@ -23,14 +23,14 @@
 
 Built with React Native for seamless user experiences, Expo Go for live environemnt testing, Animatable for captivating animations, and integrated with the dependable backend systems of Appwrite, this app showcases impressive design and functionality, enabling seamless uploading, sharing and saving of videos with others.
 
-### ⚙ Built With
+## ⚙ Built With
 * React Native 
 * Expo
 * Nativewind
 * Animatable
 * Appwrite
 
-### 📲 Features
+## 📲 Features
 👉 **Onboarding Screen:** Engaging graphics and clear instructions welcome users to the app.    
 
 👉 **Robust Authentication & Authorization System:** Secure email login safeguards user accounts.    
