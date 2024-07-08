@@ -32,15 +32,25 @@ Built with React Native for seamless user experiences, Expo Go for live environe
 
 ### 📲 Features
 👉 **Onboarding Screen:** Engaging graphics and clear instructions welcome users to the app.    
+
 👉 **Robust Authentication & Authorization System:** Secure email login safeguards user accounts.    
-👉 **Dynamic Home Screen with Animated Flat List:** Smoothly animated flat list showcases the latest videos for seamless browsing.    
+
+👉 **Dynamic Home Screen with Animated Flat List:** Smoothly animated flat list showcases the latest videos for seamless browsing.   
+
 👉 **Pull-to-Refresh Functionality:** Users can refresh content with a simple pull gesture for up-to-date information.    
+
 👉 **Full-Text Search Capability:** Efficiently search through videos with real-time suggestions and instant results.    
+
 👉 **Tab Navigation:** Navigate between sections like Home, Search, and Profile with ease using tab navigation.     
-👉 **Post Creation Screen for Uploading Media:** Upload video and image posts directly from the app with integrated media selection.      
+
+👉 **Post Creation Screen for Uploading Media:** Upload video and image posts directly from the app with integrated media selection. 
+
 👉 **Bookmark functionality:** Allows users to save videos and easily view them in a specific tab.     
+
 👉 **Profile Screen with Detailed Insights:** View account details and activity, including uploaded videos and follower count, for a personalized experience.     
-👉 **Responsiveness:** Smooth performance and adaptability across various devices and screen sizes for a consistent user experience.     
+
+👉 **Responsiveness:** Smooth performance and adaptability across various devices and screen sizes for a consistent user experience.    
+
 👉 **Animations:** Dynamic animations using the Animatable library to enhance user interaction and engagement throughout the app's UI.     
 and many more, including code architecture and reusability.     
 
@@ -113,8 +123,8 @@ Fork the Project
 This project is licensed under the MIT License
 
 ## 📞 Contact
-Kolby Kiernan - kolbykiernan@gmail.com    
-Project Link:[https://github.com/kolbykiernan/wedding-app.git](https://github.com/kolbykiernan/wedding-app.git)
+Kolby Kiernan: kolbykiernan@gmail.com    
+Project Link: The app is not available on the app store, however you can view a video demo at [https://www.loom.com/share/2893ba797ca94f9cad732159f9fd48ac](https://www.loom.com/share/2893ba797ca94f9cad732159f9fd48ac)
 
 ## 🌟 Credits
 * Inspired by [JS Mastery](https://github.com/adrianhajdin)
